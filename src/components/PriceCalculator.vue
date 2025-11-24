@@ -7,6 +7,7 @@ import Checkbox from './checkbox.vue';
 import Button from './Button.vue';
 import Card from './Card.vue';
 import Input from './Input.vue';
+import Total from './Total.vue';
 import * as htmlToImage from 'html-to-image';
 import { useMessaging } from '../composables/useMessaging';
 
@@ -48,7 +49,7 @@ function handlePaste(event) {
       reader.onerror = e => {
           showMessage("Erro ao carregar a imagem.", "error");
       };
-      
+
       break;
     }
   }
@@ -118,7 +119,7 @@ function salvar() {
         dadosSalvos.push(dados);
     }
     const dadosJsonSalvos = JSON.stringify(dadosSalvos, null, 2);
-    
+
     //Salva no localStorage
     localStorage.setItem('ps-priceficator-dados', dadosJsonSalvos);
 
@@ -174,8 +175,8 @@ onMounted(() => {
                 <tr v-for="(dados, index) in listaItensSalvos" :key="index">
                     <td>{{ dados.nomeJogo }}</td>
                     <td class="flex-center">
-                        <Button text="Carregar" icon="fa-solid fa-upload" @click="selecionarItemSalvo(dados)"></Button>
-                        <Button text="Excluir" icon="fa-solid fa-trash" color="red" @click="excluirItemSalvo(index)"></Button>
+                        <Button icon="fa-solid fa-upload" @click="selecionarItemSalvo(dados)"></Button>
+                        <Button icon="fa-solid fa-trash" color="red" @click="excluirItemSalvo(index)"></Button>
                     </td>
                 </tr>
             </tbody>
@@ -197,7 +198,7 @@ onMounted(() => {
 
     <div class="flex-horizontal">
         <Button text="Gerar Cotas" icon="fa-solid fa-gears" @click="gerar"></Button>
-        
+
     </div>
 
     <div v-if="resultado.length" style="width: 100%;">
@@ -218,7 +219,7 @@ onMounted(() => {
             </tbody>
         </table>
     </div>
-    
+
     <div id="resultado" class="center" v-show="resultado.length">
         <div class="card-result-container">
             <div ref="cardRef" class="card-result">
@@ -233,13 +234,14 @@ onMounted(() => {
                             <img v-if="previewUrl" :src="previewUrl" alt="Preview"/>
                             <div class="fade-bottom"></div>
                         </div>
-                        <table v-if="resultado.length > 0" cellpadding="6" class="table-values">
+                        <Total :total="resultado.reduce((acc, curr) => acc + curr.valor, 0)"/>
+                        <table v-if="resultado.length > 0" cellpadding="6" class="table-values" style="margin-top: 5px;">
                             <tbody>
                                 <tr v-for="(r, index) in resultado" :key="index">
                                     <td>{{ r.nome }}</td>
-                                    <td>{{ r.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</td>
+                                    <td><span class="text-price">{{ r.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span></td>
                                     <td>
-                                        <div class="estado-ocupado" v-if="r.ocupado"> 
+                                        <div class="estado-ocupado" v-if="r.ocupado">
                                             <span class="fa-regular fa-circle-check" style="color: #4CAF50;"></span>
                                             {{ r.ocupante }}
                                         </div>
@@ -323,6 +325,10 @@ onMounted(() => {
   background-color: rgb(36, 36, 36);
   margin: 20px;
   overflow: visible;
+}
+.text-price {
+  font-weight: bold;
+  color: rgb(0, 238, 255);
 }
 .estado-ocupado {
   display: flex;

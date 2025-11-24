@@ -16,8 +16,8 @@ const props = defineProps({
 </script>
 
 <template>
-    <!-- From Uiverse.io by satyamchaudharydev --> 
-<button class="button" :style="{ backgroundColor: props.color }">
+    <!-- From Uiverse.io by satyamchaudharydev -->
+<button class="button" :class="{'icon-only': props.icon && !props.text}" :style="{ backgroundColor: props.color }">
     {{ props.text }}
     <div v-if="props.icon" class="icon">
         <span :class="props.icon"></span>
@@ -27,7 +27,7 @@ const props = defineProps({
 </template>
 
 <style scoped>
-/* From Uiverse.io by satyamchaudharydev */ 
+/* From Uiverse.io by satyamchaudharydev */
 .button {
   position: relative;
   transition: all 0.3s ease-in-out;
@@ -56,6 +56,13 @@ const props = defineProps({
   transition: all 0.3s ease-in-out;
 }
 
+.icon-only {
+  padding-inline: 0.75rem;
+}
+.icon-only .icon {
+  margin-left: -5px;
+}
+
 .button:hover {
   transform: scale(1.05);
   border-color: #fff9;
@@ -63,6 +70,9 @@ const props = defineProps({
 
 .button:hover .icon {
   transform: translate(4px);
+}
+.button:hover.icon-only .icon {
+  transform: none;
 }
 
 .button:hover::before {

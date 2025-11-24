@@ -18,7 +18,7 @@ const props = defineProps({
 let inputValue = defineModel();
 </script>
 <template>
-    <!-- From Uiverse.io by Smit-Prajapati --> 
+    <!-- From Uiverse.io by Smit-Prajapati -->
         <div class="container">
         <div class="search-container">
         <input class="input" :type="type" v-model="inputValue" :placeholder="placeholder" />
@@ -34,12 +34,11 @@ let inputValue = defineModel();
 .container {
     position: relative;
     border-radius: 1000px;
-    padding: 10px;
+    padding: 5px;
     display: grid;
     place-content: center;
     z-index: 0;
-    max-width: 300px;
-    margin: 0 10px;
+    margin: unset;
 }
 
 .search-container {
@@ -47,7 +46,7 @@ let inputValue = defineModel();
     width: 100%;
     border-radius: 50px;
     background: linear-gradient(135deg, rgb(218, 232, 247) 0%, rgb(214, 229, 247) 100%);
-    padding: 10px;
+    padding: 5px;
     display: flex;
     align-items: center;
 }
@@ -77,12 +76,12 @@ let inputValue = defineModel();
 }
 
 .input {
-    padding: 10px;
+    padding: 5px;
     width: 100%;
     background: linear-gradient(135deg, rgb(218, 232, 247) 0%, rgb(214, 229, 247) 100%);
     border: none;
     color: rgb(0 107 179);
-    font-size: 18px!important;
+    font-size: 15px!important;
     font-weight: bold;
     border-radius: 50px;
     padding-left: 20px!important;
@@ -96,7 +95,7 @@ let inputValue = defineModel();
 .search__icon {
     border-radius: 50%;
     margin-right: 15px;
-    font-size: 30px;
+    font-size: 16px;
     color: rgb(0 107 179);
 }
 
